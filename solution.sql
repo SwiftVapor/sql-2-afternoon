@@ -125,3 +125,102 @@ where composer is null and genre_id = (select genre_id from genre where name = '
 
 Group By
 1
+select count(*), g.name
+from track t
+join genre g on t.genre_id =g.genre_id
+group by g.name;
+
+2
+select count(*), g.name
+from track t
+join genre g on t.genre_id = g.genre_id
+where g.name = 'Pop' or g.name = 'Rock'
+group by g.name;
+
+3
+select art.name, count(*) 
+from artist art
+join album a on art.artist_id = a.artist_id
+group by art.name;
+
+Distinct
+1
+select distinct composer
+from track;
+
+2
+select distinct billing_postal_code
+from invoice;
+
+3
+SELECT DISTINCT company
+FROM customer;
+
+Delete Rows
+1
+delete
+from practice_delete
+where type = 'bronze';
+
+2
+delete from practice_delete
+where type = 'silver';
+
+3
+delete from practice_delete
+where value = 150;
+
+
+eCommerce Simulation
+
+create table users (user_id serial primary key,name text, email text);
+
+insert into users (name, email) values 
+('Jeff','jeff@mail.com'),
+('seff','seff@mail.com'),
+('dummy','dumm@mail.com'),
+('data','data@mail.com');
+
+create table product (
+  product_id serial primary key,
+  name text,
+  price integer);
+
+insert into product(name, price) values
+('RGB keyboard',69.99),
+('RGB RAM', 169),
+('RGB GPU', 1300.02);
+
+create table orders (
+  order_id serial primary key,
+  product_id integer references product(product_id)
+  user_id intger references users(user_id));
+
+insert into orders (product_id, user_id) values
+(1, 2),
+(2, 1),
+(1, 3),
+(3, 4);
+
+select * 
+from orders o
+join users u on u.user_id = o.user_id
+where u.user_id = 1;
+
+select count (*) 
+from orders o
+join users u on u.user_id = o.user_id
+group by u.user_id
+
+
+
+
+
+-- select * from users;
+-- select * from product;
+-- select * from orders;
+
+-- select *
+-- from product pro
+-- join orders ord on ord.product_id = pro.product_id
+-- where ord.order_id = 1;
